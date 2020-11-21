@@ -2,6 +2,7 @@
   <f7-page @page:init="onPageInit" class="messages-page">
     <f7-navbar :title="title" back-link="返回" :subtitle="count">
       <f7-nav-right>
+        <f7-toggle @toggle:change="onShowLinkToggle"></f7-toggle>
         <f7-link
           external
           :href="link"
@@ -62,6 +63,7 @@ import {
   f7Block,
   f7NavRight,
   f7Link,
+  f7Toggle,
 } from "framework7-vue";
 
 export default {
@@ -74,6 +76,7 @@ export default {
     f7Block,
     f7NavRight,
     f7Link,
+    f7Toggle,
   },
 
   created() {
@@ -94,8 +97,11 @@ export default {
       link: "",
       title: "群聊",
       content: "",
+      filterLink: false,
+      data: {},
     };
   },
+
   methods: {
     async onPageInit() {
       await this.getData();
@@ -114,13 +120,12 @@ export default {
       return div.innerText;
     },
 
-    async getData() {
-      const resp = await fetch(
-        `${process.env.VUE_APP_HOST}/api/v1/hn/item?id=${this.id}&all=${this.all}`
-      );
-      const { data } = await resp.json();
+    hasLink(text) {
+      return text.includes("</a>");
+    },
 
-      this.count = `${data.comments.length} 条回复`;
+    renderView() {
+      const { data } = this;
       this.title = data.title;
       this.author = data.author;
       this.link = data.link;
@@ -149,10 +154,22 @@ export default {
           },
         };
 
-        messagesData.push(info);
+        if (!this.filterLink || this.hasLink(item.text)) {
+          messagesData.push(info);
+        }
       });
 
+      this.count = `${messagesData.length} 条回复`;
       this.messagesData = messagesData;
+    },
+
+    async getData() {
+      const resp = await fetch(
+        `${process.env.VUE_APP_HOST}/api/v1/hn/item?id=${this.id}&all=${this.all}`
+      );
+      const { data } = await resp.json();
+      this.data = data;
+      this.renderView();
     },
 
     onMessageClick(index, floor, e) {
@@ -211,6 +228,11 @@ export default {
       )
         return true;
       return false;
+    },
+
+    onShowLinkToggle() {
+      this.filterLink = !this.filterLink;
+      this.renderView();
     },
   },
 };

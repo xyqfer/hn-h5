@@ -8,6 +8,9 @@
   >
     <f7-navbar>
       <f7-nav-title class="notranslate">HN 🌀 Ask</f7-nav-title>
+      <f7-nav-right>
+        <f7-link popover-open=".popover-menu" icon-ios="f7:bars"> </f7-link>
+      </f7-nav-right>
     </f7-navbar>
 
     <TabView current="/story"></TabView>
@@ -30,6 +33,20 @@
         </div>
       </f7-list-item>
     </f7-list>
+
+    <f7-popover ref="popover" class="popover-menu">
+      <f7-list inline-labels no-hairlines-md>
+        <f7-list-input
+          type="text"
+          placeholder="Id"
+          :value="id"
+          clear-button
+          @keydown.enter.native="goItem"
+          @input="onIdInput"
+        >
+        </f7-list-input>
+      </f7-list>
+    </f7-popover>
   </f7-page>
 </template>
 
@@ -40,6 +57,10 @@ import {
   f7NavTitle,
   f7List,
   f7ListItem,
+  f7ListInput,
+  f7NavRight,
+  f7Link,
+  f7Popover,
 } from "framework7-vue";
 import TabView from "@/components/TabView.vue";
 
@@ -51,6 +72,10 @@ export default {
     f7List,
     f7ListItem,
     TabView,
+    f7NavRight,
+    f7Link,
+    f7Popover,
+    f7ListInput,
   },
 
   data() {
@@ -59,6 +84,7 @@ export default {
       listData: [],
       hasNext: true,
       allowInfinite: true,
+      id: "",
     };
   },
 
@@ -84,6 +110,16 @@ export default {
       this.allowInfinite = false;
       await this.getData(this.page);
       this.allowInfinite = true;
+    },
+
+    onIdInput(event) {
+      this.id = event.target.value;
+    },
+
+    goItem() {
+      this.$refs.popover.close();
+      this.$f7router.navigate(`/item/${this.id}?all=1`);
+      this.id = "";
     },
   },
 };
