@@ -7,7 +7,7 @@
     ref="homePage"
   >
     <f7-navbar>
-      <f7-nav-title>HN × 🌀</f7-nav-title>
+      <f7-nav-title class="notranslate">HN × 🌀</f7-nav-title>
       <f7-nav-right>
         <f7-link
           href="/random"

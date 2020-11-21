@@ -18,7 +18,11 @@
       <f7-preloader></f7-preloader>
     </f7-block>
 
-    <div v-if="isInit" v-html="content" class="post-content"></div>
+    <div
+      v-if="isInit && content !== ''"
+      v-html="content"
+      class="post-content"
+    ></div>
 
     <f7-messages
       ref="messages"
@@ -74,13 +78,16 @@ export default {
 
   created() {
     const { id } = this.$f7route.params;
+    const { all } = this.$f7route.query;
     this.id = id;
+    this.all = all || "";
   },
 
   data() {
     return {
       messagesData: [],
       id: "",
+      all: "",
       isInit: false,
       count: "",
       author: "",
@@ -109,7 +116,7 @@ export default {
 
     async getData() {
       const resp = await fetch(
-        `${process.env.VUE_APP_HOST}/api/v1/hn/item?id=${this.id}`
+        `${process.env.VUE_APP_HOST}/api/v1/hn/item?id=${this.id}&all=${this.all}`
       );
       const { data } = await resp.json();
 

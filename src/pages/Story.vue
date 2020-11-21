@@ -7,7 +7,7 @@
     ref="storyPage"
   >
     <f7-navbar>
-      <f7-nav-title>HN 🌀 Story</f7-nav-title>
+      <f7-nav-title class="notranslate">HN 🌀 Ask</f7-nav-title>
     </f7-navbar>
 
     <TabView current="/story"></TabView>
@@ -15,7 +15,7 @@
     <f7-list media-list class="topic-list">
       <f7-list-item
         v-for="item in listData"
-        :link="'/item/' + item.id"
+        :link="`/item/${item.id}?all=1`"
         :key="item.id"
       >
         <img
@@ -26,12 +26,6 @@
           {{ item.title }}
         </div>
         <div slot="text">{{ item.author }} • {{ item.time }}</div>
-        <span slot="after">
-          <f7-chip
-            :text="item.comments + ''"
-            class="notranslate chip-container"
-          ></f7-chip>
-        </span>
       </f7-list-item>
     </f7-list>
   </f7-page>
@@ -44,7 +38,6 @@ import {
   f7NavTitle,
   f7List,
   f7ListItem,
-  f7Chip,
 } from "framework7-vue";
 import TabView from "@/components/TabView.vue";
 
@@ -55,7 +48,6 @@ export default {
     f7NavTitle,
     f7List,
     f7ListItem,
-    f7Chip,
     TabView,
   },
 
@@ -75,7 +67,7 @@ export default {
 
     async getData(page = 1) {
       const resp = await fetch(
-        `${process.env.VUE_APP_HOST}/api/v1/hn/story?page=${page}`
+        `${process.env.VUE_APP_HOST}/api/v1/hn/ask?page=${page}`
       );
       const { data } = await resp.json();
 
