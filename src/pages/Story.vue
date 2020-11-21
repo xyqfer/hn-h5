@@ -25,7 +25,9 @@
         <div slot="title">
           {{ item.title }}
         </div>
-        <div slot="text">{{ item.author }} • {{ item.time }}</div>
+        <div class="notranslate" slot="text">
+          {{ item.author }} • {{ item.time }}
+        </div>
       </f7-list-item>
     </f7-list>
   </f7-page>

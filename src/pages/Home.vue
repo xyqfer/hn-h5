@@ -34,7 +34,9 @@
         <div slot="title">
           {{ item.title }}
         </div>
-        <div slot="text">{{ item.author }} • {{ item.time }}</div>
+        <div class="notranslate" slot="text">
+          {{ item.author }} • {{ item.time }}
+        </div>
         <span slot="after">
           <f7-chip
             :text="item.comments + ''"
