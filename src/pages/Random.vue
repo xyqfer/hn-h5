@@ -4,22 +4,11 @@
     @infinite="onInfinite"
     :infinite-preloader="hasNext"
     :infinite="true"
-    ref="homePage"
+    ref="randomPage"
   >
-    <f7-navbar>
-      <f7-nav-title>HN × 🌀</f7-nav-title>
-      <f7-nav-right>
-        <f7-link
-          href="/random"
-          icon-ios="f7:calendar"
-          icon-md="material:menu"
-          class="notranslate"
-        >
-        </f7-link>
-      </f7-nav-right>
+    <f7-navbar back-link="返回">
+      <f7-nav-title>Random</f7-nav-title>
     </f7-navbar>
-
-    <TabView current="/"></TabView>
 
     <f7-list media-list class="topic-list">
       <f7-list-item
@@ -51,30 +40,23 @@ import {
   f7Page,
   f7Navbar,
   f7NavTitle,
-  f7NavRight,
-  f7Link,
   f7List,
   f7ListItem,
   f7Chip,
 } from "framework7-vue";
-import TabView from "@/components/TabView.vue";
 
 export default {
   components: {
     f7Page,
     f7Navbar,
     f7NavTitle,
-    f7NavRight,
-    f7Link,
     f7List,
     f7ListItem,
     f7Chip,
-    TabView,
   },
 
   data() {
     return {
-      page: 1,
       listData: [],
       hasNext: true,
       allowInfinite: true,
@@ -83,18 +65,14 @@ export default {
 
   methods: {
     async onPageInit() {
-      await this.getData(this.page);
+      await this.getData();
     },
 
-    async getData(page = 1) {
-      const resp = await fetch(
-        `${process.env.VUE_APP_HOST}/api/v1/hn/news?page=${page}`
-      );
-      const { data } = await resp.json();
+    async getData() {
+      const resp = await fetch(`${process.env.VUE_APP_HOST}/api/v1/hn/random`);
 
+      const { data } = await resp.json();
       this.listData = this.listData.concat(data.list);
-      this.hasNext = data.hasNext;
-      this.page++;
     },
 
     async onInfinite() {

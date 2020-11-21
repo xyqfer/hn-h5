@@ -8,6 +8,7 @@
           target="_blank"
           icon-ios="f7:link"
           icon-md="material:menu"
+          class="notranslate"
         >
         </f7-link>
       </f7-nav-right>
@@ -16,6 +17,8 @@
     <f7-block class="text-align-center" v-if="!isInit">
       <f7-preloader></f7-preloader>
     </f7-block>
+
+    <div v-if="isInit" v-html="content" class="post-content"></div>
 
     <f7-messages
       ref="messages"
@@ -31,11 +34,7 @@
         :last="isLastMessage(message, index)"
         :tail="isTailMessage(message, index)"
       >
-        <div
-          slot="text"
-          v-if="message.text"
-          v-html="(message.quoteHtml || '') + message.text"
-        ></div>
+        <div slot="text" v-if="message.text" v-html="message.text"></div>
         <div slot="text-header">
           <template v-if="message.meta.floor">
             {{ message.meta.floor }}楼
@@ -44,7 +43,6 @@
             </template>
           </template>
         </div>
-        <div slot="text-footer"></div>
       </f7-message>
     </f7-messages>
   </f7-page>
@@ -59,7 +57,7 @@ import {
   f7Preloader,
   f7Block,
   f7NavRight,
-  f7Link
+  f7Link,
 } from "framework7-vue";
 
 export default {
@@ -71,7 +69,7 @@ export default {
     f7Preloader,
     f7Block,
     f7NavRight,
-    f7Link
+    f7Link,
   },
 
   created() {
@@ -87,7 +85,8 @@ export default {
       count: "",
       author: "",
       link: "",
-      title: "群聊"
+      title: "群聊",
+      content: "",
     };
   },
   methods: {
@@ -118,25 +117,17 @@ export default {
       this.title = data.title;
       this.author = data.author;
       this.link = data.link;
+      this.content = data.content;
 
-      let messagesData = [
-        {
-          type: "received",
-          name: data.author,
-          text: data.title,
-          meta: {
-            id: data.id
-          }
-        }
-      ];
+      let messagesData = [];
       if (data.text) {
         messagesData.push({
           type: "received",
           name: data.author,
           text: data.text,
           meta: {
-            id: data.id
-          }
+            id: data.id,
+          },
         });
       }
 
@@ -147,23 +138,10 @@ export default {
           text: item.text,
           meta: {
             id: item.id,
-            floor: index + 1
-          }
+            floor: index + 1,
+          },
         };
 
-        if (item.parent !== 0) {
-          let quoteHtml = "";
-          for (let i = index - 1; i >= 0; i--) {
-            if (data.comments[i].id === item.parent) {
-              quoteHtml = `<div class="quote-html">${this.getText(
-                data.comments[i].text
-              )}</div>`;
-              break;
-            }
-          }
-
-          info.quoteHtml = quoteHtml;
-        }
         messagesData.push(info);
       });
 
@@ -226,8 +204,8 @@ export default {
       )
         return true;
       return false;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -237,6 +215,7 @@ export default {
   .view {
     .messages-page {
       background: initial;
+      background-color: #d6e2ee;
       background-image: url(~@/assets/img/background_1.jpg);
       background-repeat: repeat;
       background-size: contain;
@@ -335,6 +314,44 @@ export default {
 .message-text {
   p {
     margin-bottom: 0;
+  }
+}
+
+.post-content {
+  margin: 0;
+  background-color: rgb(248, 241, 227);
+  padding: 18px;
+  font-family: -apple-system-font, Georgia, "Helvetica Neue",
+    PingFang-SC-Regular, Helvetica, sans-serif;
+  font-size: 17px;
+  line-height: 1.74;
+  color: rgb(79, 50, 28);
+  word-break: break-word;
+  margin-top: -1em;
+
+  img,
+  video,
+  table {
+    display: block;
+    max-width: 100%;
+  }
+
+  blockquote {
+    color: rgb(140, 112, 79);
+    border-left: 3px solid rgba(154, 128, 92, 0.1);
+    margin-left: 2px;
+    margin-right: 6px;
+    padding-left: 16px;
+  }
+
+  a {
+    color: rgb(209, 150, 0);
+    text-decoration: none;
+  }
+
+  code,
+  pre {
+    white-space: pre-wrap;
   }
 }
 </style>

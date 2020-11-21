@@ -7,24 +7,15 @@
     ref="homePage"
   >
     <f7-navbar>
-      <f7-nav-title>HN × 🌀</f7-nav-title>
-      <f7-nav-right>
-        <f7-link
-          href="/random"
-          icon-ios="f7:calendar"
-          icon-md="material:menu"
-          class="notranslate"
-        >
-        </f7-link>
-      </f7-nav-right>
+      <f7-nav-title>hn-links</f7-nav-title>
     </f7-navbar>
 
-    <TabView current="/"></TabView>
+    <TabView current="/hn-links"></TabView>
 
     <f7-list media-list class="topic-list">
       <f7-list-item
         v-for="item in listData"
-        :link="'/item/' + item.id"
+        :link="'/hn-link/' + item.id"
         :key="item.id"
       >
         <img
@@ -36,10 +27,7 @@
         </div>
         <div slot="text">{{ item.author }} • {{ item.time }}</div>
         <span slot="after">
-          <f7-chip
-            :text="item.comments + ''"
-            class="notranslate chip-container"
-          ></f7-chip>
+          <f7-chip :text="item.comments + ''" class="chip-container"></f7-chip>
         </span>
       </f7-list-item>
     </f7-list>
@@ -51,11 +39,9 @@ import {
   f7Page,
   f7Navbar,
   f7NavTitle,
-  f7NavRight,
-  f7Link,
   f7List,
   f7ListItem,
-  f7Chip,
+  f7Chip
 } from "framework7-vue";
 import TabView from "@/components/TabView.vue";
 
@@ -64,12 +50,10 @@ export default {
     f7Page,
     f7Navbar,
     f7NavTitle,
-    f7NavRight,
-    f7Link,
     f7List,
     f7ListItem,
     f7Chip,
-    TabView,
+    TabView
   },
 
   data() {
@@ -77,7 +61,7 @@ export default {
       page: 1,
       listData: [],
       hasNext: true,
-      allowInfinite: true,
+      allowInfinite: true
     };
   },
 
@@ -103,8 +87,8 @@ export default {
       this.allowInfinite = false;
       await this.getData(this.page);
       this.allowInfinite = true;
-    },
-  },
+    }
+  }
 };
 </script>
 

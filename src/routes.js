@@ -1,10 +1,20 @@
 import Home from "./pages/Home.vue";
+import Story from "./pages/Story.vue";
+import Random from "./pages/Random.vue";
 import Item from "./pages/Item.vue";
 
 export default [
   {
     path: "/",
     component: Home
+  },
+  {
+    path: "/story",
+    component: Story
+  },
+  {
+    path: "/random",
+    component: Random
   },
   {
     path: "/item/:id",

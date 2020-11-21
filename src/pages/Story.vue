@@ -4,22 +4,13 @@
     @infinite="onInfinite"
     :infinite-preloader="hasNext"
     :infinite="true"
-    ref="homePage"
+    ref="storyPage"
   >
     <f7-navbar>
-      <f7-nav-title>HN × 🌀</f7-nav-title>
-      <f7-nav-right>
-        <f7-link
-          href="/random"
-          icon-ios="f7:calendar"
-          icon-md="material:menu"
-          class="notranslate"
-        >
-        </f7-link>
-      </f7-nav-right>
+      <f7-nav-title>HN 🌀 Story</f7-nav-title>
     </f7-navbar>
 
-    <TabView current="/"></TabView>
+    <TabView current="/story"></TabView>
 
     <f7-list media-list class="topic-list">
       <f7-list-item
@@ -51,8 +42,6 @@ import {
   f7Page,
   f7Navbar,
   f7NavTitle,
-  f7NavRight,
-  f7Link,
   f7List,
   f7ListItem,
   f7Chip,
@@ -64,8 +53,6 @@ export default {
     f7Page,
     f7Navbar,
     f7NavTitle,
-    f7NavRight,
-    f7Link,
     f7List,
     f7ListItem,
     f7Chip,
@@ -88,7 +75,7 @@ export default {
 
     async getData(page = 1) {
       const resp = await fetch(
-        `${process.env.VUE_APP_HOST}/api/v1/hn/news?page=${page}`
+        `${process.env.VUE_APP_HOST}/api/v1/hn/story?page=${page}`
       );
       const { data } = await resp.json();
 

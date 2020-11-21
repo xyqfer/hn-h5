@@ -19,35 +19,30 @@ import routes from "./routes";
 export default {
   components: {
     f7App,
-    f7View
+    f7View,
   },
 
   data() {
-    let storageTheme = localStorage.getItem("theme");
-    let theme = storageTheme || "auto";
-
     return {
       f7Params: {
-        theme,
+        theme: "ios",
         routes,
-        id: "m.hn"
+        id: "m.hn",
       },
-      root: "/"
+      root: "/",
     };
   },
 
   created() {
     this.root = process.env.VUE_APP_BASE_URL;
-  }
+  },
 };
 </script>
 
 <style lang="scss">
 body {
-  body {
-    font-family: PingFang-SC-Regular, "Helvetica Neue", miui, Helvetica,
-      sans-serif;
-  }
+  font-family: -apple-system-font, Georgia, "Helvetica Neue",
+    PingFang-SC-Regular, Helvetica, sans-serif;
 }
 
 pre {
