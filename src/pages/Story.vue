@@ -9,6 +9,8 @@
     <f7-navbar>
       <f7-nav-title class="notranslate">HN 🌀 Ask</f7-nav-title>
       <f7-nav-right>
+        <f7-link href="/ask-random" icon-ios="f7:calendar" class="notranslate">
+        </f7-link>
         <f7-link
           class="notranslate"
           popover-open=".popover-menu"
