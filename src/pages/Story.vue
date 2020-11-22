@@ -9,7 +9,12 @@
     <f7-navbar>
       <f7-nav-title class="notranslate">HN 🌀 Ask</f7-nav-title>
       <f7-nav-right>
-        <f7-link popover-open=".popover-menu" icon-ios="f7:bars"> </f7-link>
+        <f7-link
+          class="notranslate"
+          popover-open=".popover-menu"
+          icon-ios="f7:bars"
+        >
+        </f7-link>
       </f7-nav-right>
     </f7-navbar>
 
