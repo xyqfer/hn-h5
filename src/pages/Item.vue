@@ -20,7 +20,7 @@
     </f7-block>
 
     <div
-      v-if="isInit && content !== ''"
+      v-show="isInit && content !== ''"
       v-html="content"
       class="post-content"
       ref="post"
@@ -33,7 +33,7 @@
     >
       <f7-message
         v-for="(message, index) in messagesData"
-        :key="message.meta.id + index"
+        :key="message.meta.id"
         :type="message.type"
         :name="message.name"
         :first="isFirstMessage(message, index)"
