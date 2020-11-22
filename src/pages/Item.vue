@@ -1,5 +1,5 @@
 <template>
-  <f7-page @page:init="onPageInit" class="messages-page">
+  <f7-page ref="page" @page:init="onPageInit" class="messages-page">
     <f7-navbar :title="title" back-link="返回" :subtitle="count">
       <f7-nav-right>
         <f7-toggle @toggle:change="onShowLinkToggle"></f7-toggle>
@@ -23,6 +23,7 @@
       v-if="isInit && content !== ''"
       v-html="content"
       class="post-content"
+      ref="post"
     ></div>
 
     <f7-messages
@@ -233,6 +234,10 @@ export default {
     onShowLinkToggle() {
       this.filterLink = !this.filterLink;
       this.renderView();
+      this.$nextTick(() => {
+        const height = this.$refs.post.clientHeight;
+        this.$refs.page.$el.querySelector(".page-content").scrollTop = height;
+      });
     },
   },
 };
