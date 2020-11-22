@@ -85,7 +85,7 @@ export default {
 
   data() {
     return {
-      page: 1,
+      page: 0,
       listData: [],
       hasNext: true,
       allowInfinite: true,
