@@ -35,7 +35,7 @@
           {{ item.title }}
         </div>
         <div class="notranslate" slot="text">
-          {{ item.author }} • {{ item.time }}
+          {{ item.site }} • {{ item.time }}
         </div>
         <span slot="after">
           <f7-chip
