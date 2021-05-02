@@ -18,7 +18,7 @@
       >
         <img
           slot="media"
-          :src="`https://www.dogedoge.com/favicon/${item.site}.ico`"
+          :src="'https://stateless-server.vercel.app/proxyimage?url=' + encodeURIComponent(`https://external-content.duckduckgo.com/ip3/${item.site}.ico`)"
         />
         <div slot="title">
           {{ item.title }}
